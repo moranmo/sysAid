@@ -1,0 +1,7 @@
+netstat -ao |find /i "listening"
+Taskkill /F /IM 1580
+
+http://localhost:8080/mark-complete?user=sami&taskKey=22
+
+http://localhost:8080/add-to-wish-list?user=asi&taskKey=33
+
