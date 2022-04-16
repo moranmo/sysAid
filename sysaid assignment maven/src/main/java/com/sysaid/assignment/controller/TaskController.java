@@ -68,6 +68,10 @@ public class TaskController {
 
 		//		return taskService.getRandomTask();
 	}
+	@GetMapping("/user-fatch-by-type")
+	public void fetchByType(@RequestParam String user,String type){
+		taskService.fetchTasksByType(user,type);
+	}
 
 
 

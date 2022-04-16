@@ -1,7 +1,13 @@
 netstat -ao |find /i "listening"
 Taskkill /F /IM 1580
 
-http://localhost:8080/mark-complete?user=sami&taskKey=22
+http://localhost:8080/mark-complete?user=sami&taskKey=2715253
 
-http://localhost:8080/add-to-wish-list?user=asi&taskKey=33
+http://localhost:8080/add-to-wish-list?user=alex&taskKey=5675880
+
+
+http://localhost:8080/task-of-the-day
+
+http://localhost:8080/user-fatch-by-type?user=ami&type=music
+
 
