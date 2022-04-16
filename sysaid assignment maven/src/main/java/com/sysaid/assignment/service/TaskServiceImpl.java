@@ -20,18 +20,15 @@ public class TaskServiceImpl implements  ITaskService{
 	static Map<String,LinkedList<String>> taskUsersWishMap = new HashMap<String,LinkedList<String>>();
 	static LinkedList<String> usrListCompleteTask = new LinkedList<String>();
 	static LinkedList<String> usrListWish = new LinkedList<String>();
-	Map<String,Integer> tasksRates = new HashMap<String,Integer>();
-
-	private static  LinkedList<String> tstList = new LinkedList<String>() ;
-	private static  LinkedList<String> tstList1 = new LinkedList<String>() ;
-	
-
+	static Map<String,Integer> tasksRates = new HashMap<String,Integer>();
 
 	static {
-		taskUsersCompleteMap.put("22",tstList);
-		taskUsersCompleteMap.put("33",tstList1);
-		taskUsersWishMap.put("22",tstList);
-		taskUsersWishMap.put("33",tstList1);
+		taskUsersCompleteMap.put("22",new LinkedList<String>());
+		taskUsersCompleteMap.put("33",new LinkedList<String>());
+		taskUsersWishMap.put("22",new LinkedList<String>());
+		taskUsersWishMap.put("33",new LinkedList<String>());
+		tasksRates.put("22",0);
+		tasksRates.put("33",0);
 	}
 
 
@@ -51,15 +48,16 @@ public class TaskServiceImpl implements  ITaskService{
 		usrListCompleteTask =taskUsersCompleteMap.get(task_key);
 		usrListCompleteTask.add(user);
 		taskUsersCompleteMap.put(task_key,usrListCompleteTask);
+		tasksRates.put(task_key, tasksRates.get(task_key)+2);
 		System.out.println(taskUsersCompleteMap);
 
 	}
-	public void addToWishList(String user, String task_key) {
+	public void addToWishList(String task_key, String user) {
 		usrListWish =taskUsersWishMap.get(task_key);
 		usrListWish.add(user);
 		taskUsersWishMap.put(task_key,usrListWish);
 		tasksRates.put(task_key, tasksRates.get(task_key)+1);
-		System.out.println();
+		System.out.println(taskUsersWishMap);
 	}
 
 	//	public fetchTasksByType() {

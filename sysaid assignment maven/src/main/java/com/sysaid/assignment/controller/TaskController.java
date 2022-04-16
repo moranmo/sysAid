@@ -62,9 +62,9 @@ public class TaskController {
 		//		return taskService.getRandomTask();
 	}
 	@GetMapping("/add-to-wish-list")
-	public void addToWishList(@RequestParam String user,String taskKey) {
+	public void addToWishList(@RequestParam String taskKey,String user) {
 		System.out.println(user);
-		taskService.addToWishList(user,taskKey);
+		taskService.addToWishList(taskKey,user);
 
 		//		return taskService.getRandomTask();
 	}
