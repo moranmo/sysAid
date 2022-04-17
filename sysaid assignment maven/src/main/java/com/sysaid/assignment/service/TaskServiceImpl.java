@@ -1,9 +1,7 @@
 package com.sysaid.assignment.service;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -11,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
 import com.sysaid.assignment.domain.Task;
 
 @Service
@@ -23,18 +22,19 @@ public class TaskServiceImpl implements  ITaskService{
 	static LinkedList<String> usrListWish = new LinkedList<String>();
 	static Map<String,Integer> tasksRates = new HashMap<String,Integer>();
 	static Map<String,LinkedList<Task>> userTaskMap = new HashMap<String,LinkedList<Task>>();
+	static Map<String,LinkedList<String>> userCompletedTaskMap = new HashMap<String,LinkedList<String>>();
+	static Map<String,LinkedList<String>> usersWishListTaskMap = new HashMap<String,LinkedList<String>>();
 
+	static LinkedList<String> keysList = new LinkedList<String>();
 
 
 	@Value("${external.boredapi.baseURL}")
 	private String baseUrl;
-	//	private LinkedList<Task> taskList;
-
+	
 	public ResponseEntity<Task> getRandomTask() {
 		String endpointUrl = String.format("%s/activity", baseUrl);
 		RestTemplate template = new RestTemplate();
 		ResponseEntity<Task> responseEntity = template.getForEntity(endpointUrl, Task.class);
-		//		taskList.add(responseEntity.getBody());
 		return responseEntity;
 	}
 
@@ -69,6 +69,8 @@ public class TaskServiceImpl implements  ITaskService{
 		userTaskMap.put(user, taskList);
 		initiateTaskUsersCompleteMap(userTaskMap);
 		initiateTaskUsersWishMap(userTaskMap);
+		userCompletedTaskMap.put(user, new LinkedList<String>());
+		usersWishListTaskMap.put(user, new LinkedList<String>());
 		System.out.println();
 	}
 
@@ -91,6 +93,42 @@ public class TaskServiceImpl implements  ITaskService{
 				System.out.println(entry.getValue().get(taskNum).getKey());
 			}
 		}
+
+	}
+
+	public void getUserCompletedTask(String user) {
+		//		userCompletedTaskList.add(user);
+		keysList =userCompletedTaskMap.get(user);
+		for (Entry<String, LinkedList<Task>> entry : userTaskMap.entrySet()) {
+			for(int taskNum=0;taskNum<10;taskNum++) {
+				if (taskUsersCompleteMap.get(entry.getValue().get(taskNum).getKey()).contains(user))
+				{
+					if (!keysList.contains(entry.getValue().get(taskNum).getKey())) {
+						keysList.add(entry.getValue().get(taskNum).getKey());
+						System.out.println(entry.getValue().get(taskNum).getKey());
+						userCompletedTaskMap.put(user,keysList);
+					}
+				}
+			}
+		}
+		System.out.println(userCompletedTaskMap);
+	}
+
+	public void getWhishlistTask(String user) {
+		keysList =usersWishListTaskMap.get(user);
+		for (Entry<String, LinkedList<Task>> entry : userTaskMap.entrySet()) {
+			for(int taskNum=0;taskNum<10;taskNum++) {
+				if (taskUsersWishMap.get(entry.getValue().get(taskNum).getKey()).contains(user))
+				{
+					if (!keysList.contains(entry.getValue().get(taskNum).getKey())) {
+						keysList.add(entry.getValue().get(taskNum).getKey());
+						System.out.println(entry.getValue().get(taskNum).getKey());
+						usersWishListTaskMap.put(user,keysList);
+					}
+				}
+			}
+		}
+		System.out.println(usersWishListTaskMap);
 
 	}
 }

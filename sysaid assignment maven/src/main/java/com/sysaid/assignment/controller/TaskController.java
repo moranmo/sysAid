@@ -72,6 +72,16 @@ public class TaskController {
 	public void fetchByType(@RequestParam String user,String type){
 		taskService.fetchTasksByType(user,type);
 	}
+	
+	@GetMapping("/user-completed-tasks")
+	public void getUserCompletedTask(@RequestParam String user){
+		taskService.getUserCompletedTask(user);
+	}
+	
+	@GetMapping("/user-wishlist-task")
+	public void getWhishlistTask(@RequestParam String user){
+		taskService.getWhishlistTask(user);
+	}
 
 
 
